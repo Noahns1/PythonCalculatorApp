@@ -28,8 +28,12 @@ class Calculator:
             1: (3, 1), 2: (3, 2), 3: (3, 3),
             0: (4, 2), '.': (4, 1)
         }
-        self.create_digit_buttons()
+        # this errored out because button_frame needed to be above
+        # self.create_buttons_frame
+        # Note for error doc:
+        # if you assign an attribute to a method, if but be assigned above the method
         self.buttons_frame = self.create_buttons_frame()
+        self.create_digit_buttons()
 
     def create_display(self):
         frame = tk.Frame(self.window, height=221, bg=LIGHT_GRAY)
@@ -38,19 +42,18 @@ class Calculator:
 
     def create_display_frame(self):
         total = tk.Label(self.display_frame, text=self.total_expression, anchor=tk.E, bg=LIGHT_GRAY,
-                               fg=LABEL_COLOR, padx=24, font=SMALL_FONT)
+                         fg=LABEL_COLOR, padx=24, font=SMALL_FONT)
         total.pack(expand=True, fill="both")
 
         expression = tk.Label(self.display_frame, text=self.current_expression, anchor=tk.E, bg=LIGHT_GRAY,
-                         fg=LABEL_COLOR, padx=24, font=LARGE_FONT)
+                              fg=LABEL_COLOR, padx=24, font=LARGE_FONT)
         expression.pack(expand=True, fill="both")
-
         return total, expression
 
     def create_digit_buttons(self):
         for digit, grid_value in self.digits.items():
             button = tk.Button(self.buttons_frame, text=str(digit), bg=WHITE, fg=LABEL_COLOR)
-            button.grid(row=grid_value[0], column=grid_value[1])
+            button.grid(row=grid_value[0], column=grid_value[1], sticky=tk.NSEW)
 
     def create_buttons_frame(self):
         frame = tk.Frame(self.window)
