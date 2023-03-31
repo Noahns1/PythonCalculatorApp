@@ -104,6 +104,9 @@ class Calculator:
         self.equals_button()
         self.sqrt_button()
         self.square_button()
+        self.percent_button()
+        self.negative_button()
+        self.grid_button()
 
     # Adding operators to labels
     def append_operator(self, operator):
@@ -152,15 +155,17 @@ class Calculator:
                                command=lambda opt=operator: self.append_operator(opt))
             button.grid(row=x, column=4, sticky=tk.NSEW)
             x += 1
+
     # percent functionality
     def percent(self):
+        self.current_expression = str(eval(f"{self.current_expression}*.01"))
         self.update_label()
 
     # Percent Button
     def percent_button(self):
-        button = tk.Button(self.buttons_frame, text="AC", bg=DARK_BLUE, fg=BTN_COLOR,
+        button = tk.Button(self.buttons_frame, text="%", bg=DARK_BLUE, fg=BTN_COLOR,
                            font=SYMBOLS_FONT, borderwidth=0,
-                           command=self.clear)
+                           command=self.percent)
         button.grid(row=1, column=1, sticky=tk.NSEW)
 
     # Grid functionality
@@ -169,20 +174,21 @@ class Calculator:
 
     # Grid button
     def grid_button(self):
-        button = tk.Button(self.buttons_frame, text="AC", bg=DARK_BLUE, fg=BTN_COLOR,
+        button = tk.Button(self.buttons_frame, text="Grid", bg=DARK_BLUE, fg=BTN_COLOR,
                            font=SYMBOLS_FONT, borderwidth=0,
-                           command=self.clear)
-        button.grid(row=0, column=1, sticky=tk.NSEW)
+                           command=self.grid)
+        button.grid(row=0, column=3, columnspan=2, sticky=tk.NSEW)
 
     # +/- functionality
     def negative(self):
+        self.current_expression = str(eval(f"{self.current_expression}*-1"))
         self.update_label()
 
     # +/- button
     def negative_button(self):
-        button = tk.Button(self.buttons_frame, text="AC", bg=DARK_BLUE, fg=BTN_COLOR,
+        button = tk.Button(self.buttons_frame, text="+/-", bg=DARK_BLUE, fg=BTN_COLOR,
                            font=SYMBOLS_FONT, borderwidth=0,
-                           command=self.clear)
+                           command=self.negative)
         button.grid(row=0, column=2, sticky=tk.NSEW)
 
     # Clearing labels functionality
@@ -262,7 +268,7 @@ class Calculator:
     # Updating Label
     def update_label(self):
         # updating the label and truncating it to 10
-        self.expression.config(text=self.current_expression[:10])
+        self.expression.config(text=self.current_expression[:8])
 
     def run(self):
         self.window.mainloop()
