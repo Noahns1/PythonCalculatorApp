@@ -67,10 +67,10 @@ class Calculator:
 
         # Create buttons
         self.digits = {
-            7: (2, 1), 8: (2, 2), 9: (2, 3),
-            4: (3, 1), 5: (3, 2), 6: (3, 3),
-            1: (4, 1), 2: (4, 2), 3: (4, 3),
-            0: (5, 2), '.': (5, 1)
+            7: (2, 2), 8: (2, 3), 9: (2, 4),
+            4: (3, 2), 5: (3, 3), 6: (3, 4),
+            1: (4, 2), 2: (4, 3), 3: (4, 4),
+            0: (5, 3), '.': (5, 2)
         }
         # This doesn't work, it only expects an iterable or a string
         # self.Digits = namedtuple("Digits", self.digits.keys())(*self.digits.values())
@@ -106,7 +106,9 @@ class Calculator:
         self.square_button()
         self.percent_button()
         self.negative_button()
-        self.grid_button()
+        # self.grid_button()
+        self.cube_button()
+        self.cuberoot_button()
 
     # Adding operators to labels
     def append_operator(self, operator):
@@ -153,7 +155,7 @@ class Calculator:
             button = tk.Button(self.buttons_frame, text=symbol, bg=DARK_BLUE, fg=BTN_COLOR,
                                font=SYMBOLS_FONT, borderwidth=0,
                                command=lambda opt=operator: self.append_operator(opt))
-            button.grid(row=x, column=4, sticky=tk.NSEW)
+            button.grid(row=x, column=5, sticky=tk.NSEW)
             x += 1
 
     # percent functionality
@@ -166,18 +168,18 @@ class Calculator:
         button = tk.Button(self.buttons_frame, text="%", bg=DARK_BLUE, fg=BTN_COLOR,
                            font=SYMBOLS_FONT, borderwidth=0,
                            command=self.percent)
-        button.grid(row=1, column=1, sticky=tk.NSEW)
+        button.grid(row=1, column=2, sticky=tk.NSEW)
 
     # Grid functionality
-    def grid(self):
-        self.update_label()
-
-    # Grid button
-    def grid_button(self):
-        button = tk.Button(self.buttons_frame, text="Grid", bg=DARK_BLUE, fg=BTN_COLOR,
-                           font=SYMBOLS_FONT, borderwidth=0,
-                           command=self.grid)
-        button.grid(row=0, column=3, columnspan=2, sticky=tk.NSEW)
+    # def grid(self):
+    #     self.update_label()
+    #
+    # # Grid button
+    # def grid_button(self):
+    #     button = tk.Button(self.buttons_frame, text="Grid", bg=DARK_BLUE, fg=BTN_COLOR,
+    #                        font=SYMBOLS_FONT, borderwidth=0,
+    #                        command=self.grid)
+    #     button.grid(row=0, column=3, columnspan=2, sticky=tk.NSEW)
 
     # +/- functionality
     def negative(self):
@@ -189,7 +191,7 @@ class Calculator:
         button = tk.Button(self.buttons_frame, text="+/-", bg=DARK_BLUE, fg=BTN_COLOR,
                            font=SYMBOLS_FONT, borderwidth=0,
                            command=self.negative)
-        button.grid(row=0, column=2, sticky=tk.NSEW)
+        button.grid(row=0, column=5, sticky=tk.NSEW)
 
     # Clearing labels functionality
     def clear(self):
@@ -203,7 +205,7 @@ class Calculator:
         button = tk.Button(self.buttons_frame, text="AC", bg=DARK_BLUE, fg=BTN_COLOR,
                            font=SYMBOLS_FONT, borderwidth=0,
                            command=self.clear)
-        button.grid(row=0, column=1, sticky=tk.NSEW)
+        button.grid(row=0, column=2, sticky=tk.NSEW)
 
     # Squaring functionality
     def square(self):
@@ -215,7 +217,7 @@ class Calculator:
         button = tk.Button(self.buttons_frame, text="x\u00b2", bg=DARK_BLUE, fg=BTN_COLOR,
                            font=SYMBOLS_FONT, borderwidth=0,
                            command=self.square)
-        button.grid(row=1, column=2, sticky=tk.NSEW)
+        button.grid(row=1, column=3, sticky=tk.NSEW)
 
     # Square root functionality
     def sqrt(self):
@@ -227,7 +229,31 @@ class Calculator:
         button = tk.Button(self.buttons_frame, text="\u221ax", bg=DARK_BLUE, fg=BTN_COLOR,
                            font=SYMBOLS_FONT, borderwidth=0,
                            command=self.sqrt)
-        button.grid(row=1, column=3, sticky=tk.NSEW)
+        button.grid(row=1, column=4, sticky=tk.NSEW)
+
+    # Cube functionality
+    def cuberoot(self):
+        self.current_expression = str(eval(f"{self.current_expression}**(1/3)"))
+        self.update_label()
+
+    # Cube button
+    def cuberoot_button(self):
+        button = tk.Button(self.buttons_frame, text="\u221bx", bg=DARK_BLUE, fg=BTN_COLOR,
+                           font=SYMBOLS_FONT, borderwidth=0,
+                           command=self.cuberoot)
+        button.grid(row=0, column=4, sticky=tk.NSEW)
+
+    # Cube functionality
+    def cube(self):
+        self.current_expression = str(eval(f"{self.current_expression}**3"))
+        self.update_label()
+
+    # Cube button
+    def cube_button(self):
+        button = tk.Button(self.buttons_frame, text="x\u00b3", bg=DARK_BLUE, fg=BTN_COLOR,
+                           font=SYMBOLS_FONT, borderwidth=0,
+                           command=self.cube)
+        button.grid(row=0, column=3, sticky=tk.NSEW)
 
     # Adding current label to total label with exception handling ->
     # also provides functionality for equals sign
@@ -250,7 +276,7 @@ class Calculator:
         button = tk.Button(self.buttons_frame, text="=", bg=LIGHT_BLUE, fg=BTN_COLOR,
                            font=SYMBOLS_FONT, borderwidth=0,
                            command=self.evaluate)
-        button.grid(row=5, column=3, columnspan=2, sticky=tk.NSEW)
+        button.grid(row=5, column=4, columnspan=2, sticky=tk.NSEW)
 
     # Buttons frame
     def buttons_frame(self):
