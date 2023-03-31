@@ -152,6 +152,38 @@ class Calculator:
                                command=lambda opt=operator: self.append_operator(opt))
             button.grid(row=x, column=4, sticky=tk.NSEW)
             x += 1
+    # percent functionality
+    def percent(self):
+        self.update_label()
+
+    # Percent Button
+    def percent_button(self):
+        button = tk.Button(self.buttons_frame, text="AC", bg=DARK_BLUE, fg=BTN_COLOR,
+                           font=SYMBOLS_FONT, borderwidth=0,
+                           command=self.clear)
+        button.grid(row=0, column=1, sticky=tk.NSEW)
+
+    # Grid functionality
+    def grid(self):
+        self.update_label()
+
+    # Grid button
+    def grid_button(self):
+        button = tk.Button(self.buttons_frame, text="AC", bg=DARK_BLUE, fg=BTN_COLOR,
+                           font=SYMBOLS_FONT, borderwidth=0,
+                           command=self.clear)
+        button.grid(row=0, column=1, sticky=tk.NSEW)
+
+    # +/- functionality
+    def negative(self):
+        self.update_label()
+
+    # +/- button
+    def negative_button(self):
+        button = tk.Button(self.buttons_frame, text="AC", bg=DARK_BLUE, fg=BTN_COLOR,
+                           font=SYMBOLS_FONT, borderwidth=0,
+                           command=self.clear)
+        button.grid(row=0, column=1, sticky=tk.NSEW)
 
     # Clearing labels functionality
     def clear(self):
