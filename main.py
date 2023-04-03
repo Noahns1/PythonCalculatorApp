@@ -2,11 +2,15 @@
 # Calculator App
 import os
 import tkinter as tk
+import numpy
+import math
+from bunch import bunchify
 from collections import namedtuple
-from PIL import Image
+from PIL import Image, ImageTk
 import imagehash as ih
 import hashlib
 from os import listdir
+
 
 # --- Constants ---
 # notes
@@ -72,6 +76,22 @@ class Calculator:
             1: (4, 2), 2: (4, 3), 3: (4, 4),
             0: (5, 3), '.': (5, 2)
         }
+
+        self.digits_png = ["buttons/Seven.png", "buttons/Eight.png", "buttons/Nine.png",
+                           "buttons/Four.png", "buttons/Five", "buttons/Six.png",
+                           "button/One.png", "buttons/Two.png", "buttons/One.png",
+                           "buttons/Zero.png"]
+
+        # Create buttons
+        # self.digits_png = {
+        #     "Seven.png": (2, 2), "buttons/Eight.png": (2, 3), "buttons/Nine.png": (2, 4),
+        #     "buttons/Four.png": (3, 2), "buttons/Five.png": (3, 3), "buttons/Six.png": (3, 4),
+        #     "buttons/One.png": (4, 2), "buttons/Two.png": (4, 3), "buttons/Three.png": (4, 4),
+        #     "buttons/Zero.png": (5, 3), '.': (5, 2)
+        # }
+        # self.png_object = bunchify(self.digits_png)
+        # self.png_object = iter(self.digits_png)
+
         # This doesn't work, it only expects an iterable or a string
         # self.Digits = namedtuple("Digits", self.digits.keys())(*self.digits.values())
         # math symbols
@@ -89,14 +109,7 @@ class Calculator:
         self.digit_buttons()
         self.operator_buttons()
         self.special_buttons()
-
-        # button images ---unused ---
-        # self.pngList = {
-        #     1: "buttons/One.png", 2: "buttons/Two.png", 3: "buttons/Three.png",
-        #     4: "buttons/Four.png", 5: "buttons/Five.png", 6: "buttons/Six.png",
-        #     7: "buttons/Seven.png", 8: "buttons/Eight.png", 9: "buttons/Nine.png",
-        #     0: "buttons/Zero.png"
-        # }
+        # self.digit_buttons_png()
 
     # Buttons
     def special_buttons(self):
@@ -109,6 +122,10 @@ class Calculator:
         # self.grid_button()
         self.cube_button()
         self.cuberoot_button()
+        self.one_over_x_button()
+        self.pi_button()
+        self.ten_to_x_button()
+        self.factorial_button()
 
     # Adding operators to labels
     def append_operator(self, operator):
@@ -188,10 +205,13 @@ class Calculator:
 
     # +/- button
     def negative_button(self):
-        button = tk.Button(self.buttons_frame, text="+/-", bg=DARK_BLUE, fg=BTN_COLOR,
+        # image = Image.open("buttons/plusMinus2.png")
+        # image = image.resize((100, 100), Image.LANCZOS)
+        # image_png = ImageTk.PhotoImage(image)
+        button = tk.Button(self.buttons_frame, text='+/-', bg=DARK_BLUE, fg=BTN_COLOR,
                            font=SYMBOLS_FONT, borderwidth=0,
                            command=self.negative)
-        button.grid(row=0, column=5, sticky=tk.NSEW)
+        button.grid(row=0, column=2, sticky=tk.NSEW)
 
     # Clearing labels functionality
     def clear(self):
@@ -202,10 +222,10 @@ class Calculator:
 
     # Adding clear button to grid
     def clear_button(self):
-        button = tk.Button(self.buttons_frame, text="AC", bg=DARK_BLUE, fg=BTN_COLOR,
+        button = tk.Button(self.buttons_frame, text="AC", bg=LIGHT_BLUE, fg=BTN_COLOR,
                            font=SYMBOLS_FONT, borderwidth=0,
                            command=self.clear)
-        button.grid(row=0, column=2, sticky=tk.NSEW)
+        button.grid(row=0, column=5, sticky=tk.NSEW)
 
     # Squaring functionality
     def square(self):
@@ -254,6 +274,54 @@ class Calculator:
                            font=SYMBOLS_FONT, borderwidth=0,
                            command=self.cube)
         button.grid(row=0, column=3, sticky=tk.NSEW)
+
+    # 1/x functionality
+    def one_over_x(self):
+        self.current_expression = str(eval(f"1/{self.current_expression}"))
+        self.update_label()
+
+    # 1/x button
+    def one_over_x_button(self):
+        button = tk.Button(self.buttons_frame, text="1/x", bg=DARK_BLUE, fg=BTN_COLOR,
+                           font=SYMBOLS_FONT, borderwidth=0,
+                           command=self.one_over_x)
+        button.grid(row=0, column=1, sticky=tk.NSEW)
+
+    # Pi functionality
+    def pi(self):
+        self.current_expression = str(numpy.pi)
+        self.update_label()
+
+    # Pi button
+    def pi_button(self):
+        button = tk.Button(self.buttons_frame, text="Pi", bg=DARK_BLUE, fg=BTN_COLOR,
+                           font=SYMBOLS_FONT, borderwidth=0,
+                           command=self.pi)
+        button.grid(row=1, column=1, sticky=tk.NSEW)
+
+    # 10^x functionality
+    def ten_to_x(self):
+        self.current_expression = str(eval(f"10**{self.current_expression}"))
+        self.update_label()
+
+    # 10^x button
+    def ten_to_x_button(self):
+        button = tk.Button(self.buttons_frame, text="10\u02e3", bg=DARK_BLUE, fg=BTN_COLOR,
+                           font=SYMBOLS_FONT, borderwidth=0,
+                           command=self.ten_to_x)
+        button.grid(row=2, column=1, sticky=tk.NSEW)
+
+    # Factorial functionality
+    def factorial(self):
+        self.current_expression = str(eval(f"math.factorial({self.current_expression})"))
+        self.update_label()
+
+    # Factorial button
+    def factorial_button(self):
+        button = tk.Button(self.buttons_frame, text="x!", bg=DARK_BLUE, fg=BTN_COLOR,
+                           font=SYMBOLS_FONT, borderwidth=0,
+                           command=self.factorial)
+        button.grid(row=3, column=1, sticky=tk.NSEW)
 
     # Adding current label to total label with exception handling ->
     # also provides functionality for equals sign
