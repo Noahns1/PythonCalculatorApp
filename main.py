@@ -2,6 +2,8 @@
 # Calculator App
 import os
 import tkinter as tk
+from decimal import Decimal
+
 import numpy
 import math
 from bunch import bunchify
@@ -28,9 +30,13 @@ SYMBOLS_FONT = ("Comic Sans", 24)
 DARK_BLUE = '#282A36'
 WHITE = "#FFFFFF"
 LIGHT_BLUE = "#44475A"
-LIGHT_GRAY = "#A7A6BA"
+LIGHT_GRAY = "#D4D4D2"
+DARK_GRAY = "#505050"
+DARK_GRAY2 = "#414141"
 LABEL_COLOR = "#000000"
 BTN_COLOR = "#6272A4"
+BLACK_COLOR = "#1C1C1C"
+ORANGE = "#FF9500"
 
 # Numbers
 # Seven = hashlib.md5(Image.open('buttons/Seven.png'))
@@ -52,7 +58,7 @@ class Calculator:
     def __init__(self):
         # Create window
         self.window = tk.Tk()
-        self.window.geometry("350x500")
+        self.window.geometry("600x600")
         self.window.resizable(0, 0) # used to stop the window from being resized
         self.window.title("Calculator")
 
@@ -74,7 +80,7 @@ class Calculator:
             7: (1, 3), 8: (1, 4), 9: (1, 5),
             4: (2, 3), 5: (2, 4), 6: (2, 5),
             1: (3, 3), 2: (3, 4), 3: (3, 5),
-            '.': (4, 3), 0: (4, 4)
+            '.': (4, 4), 0: (4, 3)
         }
 
         self.digits_png = ["buttons/Seven.png", "buttons/Eight.png", "buttons/Nine.png",
@@ -139,18 +145,18 @@ class Calculator:
 
     # Creating display for numbers and expression
     def display_frame(self):
-        frame = tk.Frame(self.window, height=221, bg=LIGHT_GRAY)
+        frame = tk.Frame(self.window, height=221)
         frame.pack(expand=True, fill="both")
         return frame
 
     # Creating the display for equation total and equation expression
     def create_display(self):
-        ttl = tk.Label(self.display, text=self.total_expression, anchor=tk.E, bg=LIGHT_GRAY,
-                       fg=LABEL_COLOR, padx=24, font=TTL_FONT)
+        ttl = tk.Label(self.display, text=self.total_expression, anchor=tk.E, bg=BLACK_COLOR,
+                       fg=WHITE, padx=24, font=TTL_FONT)
         ttl.pack(expand=True, fill="both")
 
-        exp = tk.Label(self.display, text=self.current_expression, anchor=tk.E, bg=LIGHT_GRAY,
-                       fg=LABEL_COLOR, padx=24, font=EXP_FONT)
+        exp = tk.Label(self.display, text=self.current_expression, anchor=tk.E, bg=BLACK_COLOR,
+                       fg=WHITE, padx=24, font=EXP_FONT)
         exp.pack(expand=True, fill="both")
         return ttl, exp
 
@@ -162,18 +168,20 @@ class Calculator:
     # Creating grid for digit buttons
     def digit_buttons(self):
         for digit, grid_value in self.digits.items():
-            button = tk.Button(self.buttons_frame, text=digit, bg=WHITE, fg=BTN_COLOR,
+            button = tk.Button(self.buttons_frame, text=digit, bg=DARK_GRAY, fg=WHITE,
                                font=DIGITS_FONT, borderwidth=0,
-                               command=lambda dgt=digit: self.add_expression(dgt))
+                               command=lambda dgt=digit: self.add_expression(dgt),
+                               height=1, width=1)
             button.grid(row=grid_value[0], column=grid_value[1], sticky=tk.NSEW)
 
     # adding operator buttons to grid
     def operator_buttons(self):
         x = 0
         for operator, symbol in self.operations.items():
-            button = tk.Button(self.buttons_frame, text=symbol, bg=DARK_BLUE, fg=BTN_COLOR,
+            button = tk.Button(self.buttons_frame, text=symbol, bg=ORANGE, fg=WHITE,
                                font=SYMBOLS_FONT, borderwidth=0,
-                               command=lambda opt=operator: self.append_operator(opt))
+                               command=lambda opt=operator: self.append_operator(opt),
+                               height=1, width=5)
             button.grid(row=x, column=6, sticky=tk.NSEW)
             x += 1
 
@@ -184,9 +192,9 @@ class Calculator:
 
     # Percent Button
     def percent_button(self):
-        button = tk.Button(self.buttons_frame, text="%", bg=DARK_BLUE, fg=BTN_COLOR,
+        button = tk.Button(self.buttons_frame, text="%", bg=LIGHT_GRAY, fg=BLACK_COLOR,
                            font=SYMBOLS_FONT, borderwidth=0,
-                           command=self.percent)
+                           command=self.percent, height=1, width=5)
         button.grid(row=0, column=5, sticky=tk.NSEW)
 
     # Grid functionality
@@ -210,9 +218,9 @@ class Calculator:
         # image = Image.open("buttons/plusMinus2.png")
         # image = image.resize((100, 100), Image.LANCZOS)
         # image_png = ImageTk.PhotoImage(image)
-        button = tk.Button(self.buttons_frame, text='+/-', bg=DARK_BLUE, fg=BTN_COLOR,
+        button = tk.Button(self.buttons_frame, text='+/-', bg=LIGHT_GRAY, fg=BLACK_COLOR,
                            font=SYMBOLS_FONT, borderwidth=0,
-                           command=self.negative)
+                           command=self.negative, height=1, width=1)
         button.grid(row=0, column=4, sticky=tk.NSEW)
 
     # Clearing labels functionality
@@ -224,9 +232,9 @@ class Calculator:
 
     # Adding clear button to grid
     def clear_button(self):
-        button = tk.Button(self.buttons_frame, text="AC", bg=LIGHT_BLUE, fg=BTN_COLOR,
+        button = tk.Button(self.buttons_frame, text="AC", bg=LIGHT_GRAY, fg=BLACK_COLOR,
                            font=SYMBOLS_FONT, borderwidth=0,
-                           command=self.clear)
+                           command=self.clear, height=1, width=1)
         button.grid(row=0, column=3, sticky=tk.NSEW)
 
     # Squaring functionality
@@ -236,9 +244,9 @@ class Calculator:
 
     # Adding square button to grid
     def square_button(self):
-        button = tk.Button(self.buttons_frame, text="x\u00b2", bg=DARK_BLUE, fg=BTN_COLOR,
+        button = tk.Button(self.buttons_frame, text="x\u00b2", bg=DARK_GRAY2, fg=WHITE,
                            font=SYMBOLS_FONT, borderwidth=0,
-                           command=self.square)
+                           command=self.square, height=1, width=1)
         button.grid(row=1, column=1, sticky=tk.NSEW)
 
     # Square root functionality
@@ -248,9 +256,9 @@ class Calculator:
 
     # Adding square root button to grid
     def sqrt_button(self):
-        button = tk.Button(self.buttons_frame, text="\u221ax", bg=DARK_BLUE, fg=BTN_COLOR,
+        button = tk.Button(self.buttons_frame, text="\u221ax", bg=DARK_GRAY2, fg=WHITE,
                            font=SYMBOLS_FONT, borderwidth=0,
-                           command=self.sqrt)
+                           command=self.sqrt, height=1, width=1)
         button.grid(row=1, column=2, sticky=tk.NSEW)
 
     # Cube functionality
@@ -260,9 +268,9 @@ class Calculator:
 
     # Cube button
     def cuberoot_button(self):
-        button = tk.Button(self.buttons_frame, text="\u221bx", bg=DARK_BLUE, fg=BTN_COLOR,
+        button = tk.Button(self.buttons_frame, text="\u221bx", bg=DARK_GRAY2, fg=WHITE,
                            font=SYMBOLS_FONT, borderwidth=0,
-                           command=self.cuberoot)
+                           command=self.cuberoot, height=1, width=1)
         button.grid(row=2, column=2, sticky=tk.NSEW)
 
     # Cube functionality
@@ -272,9 +280,9 @@ class Calculator:
 
     # Cube button
     def cube_button(self):
-        button = tk.Button(self.buttons_frame, text="x\u00b3", bg=DARK_BLUE, fg=BTN_COLOR,
+        button = tk.Button(self.buttons_frame, text="x\u00b3", bg=DARK_GRAY2, fg=WHITE,
                            font=SYMBOLS_FONT, borderwidth=0,
-                           command=self.cube)
+                           command=self.cube, height=1, width=1)
         button.grid(row=2, column=1, sticky=tk.NSEW)
 
     # 1/x functionality
@@ -284,9 +292,9 @@ class Calculator:
 
     # 1/x button
     def one_over_x_button(self):
-        button = tk.Button(self.buttons_frame, text="1/x", bg=DARK_BLUE, fg=BTN_COLOR,
+        button = tk.Button(self.buttons_frame, text="1/x", bg=DARK_GRAY2, fg=WHITE,
                            font=SYMBOLS_FONT, borderwidth=0,
-                           command=self.one_over_x)
+                           command=self.one_over_x, height=1, width=1)
         button.grid(row=0, column=1, sticky=tk.NSEW)
 
     # Pi functionality
@@ -296,9 +304,9 @@ class Calculator:
 
     # Pi button
     def pi_button(self):
-        button = tk.Button(self.buttons_frame, text="Pi", bg=DARK_BLUE, fg=BTN_COLOR,
+        button = tk.Button(self.buttons_frame, text="Pi", bg=DARK_GRAY2, fg=WHITE,
                            font=SYMBOLS_FONT, borderwidth=0,
-                           command=self.pi)
+                           command=self.pi, height=1, width=1)
         button.grid(row=0, column=2, sticky=tk.NSEW)
 
     # 10^x functionality
@@ -308,9 +316,9 @@ class Calculator:
 
     # 10^x button
     def ten_to_x_button(self):
-        button = tk.Button(self.buttons_frame, text="10\u02e3", bg=DARK_BLUE, fg=BTN_COLOR,
+        button = tk.Button(self.buttons_frame, text="10\u02e3", bg=DARK_GRAY2, fg=WHITE,
                            font=SYMBOLS_FONT, borderwidth=0,
-                           command=self.ten_to_x)
+                           command=self.ten_to_x, height=1, width=1)
         button.grid(row=3, column=1, sticky=tk.NSEW)
 
     # Factorial functionality
@@ -320,9 +328,9 @@ class Calculator:
 
     # Factorial button
     def factorial_button(self):
-        button = tk.Button(self.buttons_frame, text="x!", bg=DARK_BLUE, fg=BTN_COLOR,
+        button = tk.Button(self.buttons_frame, text="x!", bg=DARK_GRAY2, fg=WHITE,
                            font=SYMBOLS_FONT, borderwidth=0,
-                           command=self.factorial)
+                           command=self.factorial, height=1, width=1)
         button.grid(row=3, column=2, sticky=tk.NSEW)
 
     # Log10 functionality
@@ -332,9 +340,9 @@ class Calculator:
 
     # Log10 button
     def log_ten_button(self):
-        button = tk.Button(self.buttons_frame, text="log10", bg=DARK_BLUE, fg=BTN_COLOR,
+        button = tk.Button(self.buttons_frame, text="log10", bg=DARK_GRAY2, fg=WHITE,
                            font=SYMBOLS_FONT, borderwidth=0,
-                           command=self.factorial)
+                           command=self.factorial, height=1, width=1)
         button.grid(row=4, column=1, sticky=tk.NSEW)
 
     # e^x functionality
@@ -344,9 +352,9 @@ class Calculator:
 
     # e^x button
     def e_to_x_button(self):
-        button = tk.Button(self.buttons_frame, text="e\u02e3", bg=DARK_BLUE, fg=BTN_COLOR,
+        button = tk.Button(self.buttons_frame, text="e\u02e3", bg=DARK_GRAY2, fg=WHITE,
                            font=SYMBOLS_FONT, borderwidth=0,
-                           command=self.e_to_x)
+                           command=self.e_to_x, height=1, width=1)
         button.grid(row=4, column=2, sticky=tk.NSEW)
 
     # Adding current label to total label with exception handling ->
@@ -354,9 +362,10 @@ class Calculator:
     def evaluate(self):
         self.total_expression += self.current_expression
         self.total_label()
+        # x = "{:2.E}".format(Decimal(self.total_expression))
         # Adding exception handling exceptions that won't compute
         try:
-            self.current_expression = str(eval(self.total_expression))
+            self.current_expression = (str(eval(self.total_expression)))
             self.total_expression = ''
         except Exception as e:
             self.current_expression = "ERROR"
@@ -367,9 +376,9 @@ class Calculator:
 
     # Adding equal sign button
     def equals_button(self):
-        button = tk.Button(self.buttons_frame, text="=", bg=LIGHT_BLUE, fg=BTN_COLOR,
+        button = tk.Button(self.buttons_frame, text="=", bg=ORANGE, fg=WHITE,
                            font=SYMBOLS_FONT, borderwidth=0,
-                           command=self.evaluate)
+                           command=self.evaluate, height=1, width=1)
         button.grid(row=4, column=5, columnspan=2, sticky=tk.NSEW)
 
     # Buttons frame
@@ -388,7 +397,7 @@ class Calculator:
     # Updating Label
     def update_label(self):
         # updating the label and truncating it to 10
-        self.expression.config(text=self.current_expression[:8])
+        self.expression.config(text=self.current_expression[:10])
 
     def run(self):
         self.window.mainloop()
