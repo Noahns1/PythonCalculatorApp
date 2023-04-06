@@ -397,7 +397,7 @@ class Calculator:
     # Updating Label
     def update_label(self):
         # updating the label and truncating it to 10
-        self.expression.config(text=self.current_expression[:10])
+        self.expression.config(text=self.current_expression[:16])
 
     def run(self):
         self.window.mainloop()
