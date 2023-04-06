@@ -28,13 +28,21 @@ Functionality:
 
 How does it work?
 
-    For the simple operators, highlighted in orange such as divide, multiply,
+    The simple operators, highlighted in orange are divide, multiply,
     add, and subtract. You select your chosen number then your operator, 
     and then your next chosen number and select "=", do find your answer.
 
-    Example: press the following buttons. "2", "+", "2", "=". You will get 4 which then represents your first chosen number.
+    Example: press the following buttons. "2", "+", "2", "=". You will get "4" which then represents your first chosen number.
 
-    For the advanced 
+    For the advanced operators, highlighted in dark and light grey are 1/x, square, 
+    square root, cube, cube root, 10^x, factorial, Log10, e^x, +/-, %. You select
+    a number to represent X for the button, then select your operator.
+
+    Example: press the following buttons. "5", "x^2". It will evaluate for you and you will receive "25"
+
+    Exceptions: 2 buttons that are colored dark and light grey are exceptions to this.
+    "Pi", which it a number and would act as your number chosen. "AC" which will clear
+    current and total expression.
 
 
     
