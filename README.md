@@ -4,7 +4,8 @@ This Application was developed using Tkinter to build the GUI.
 
 Functionality:
 
-    It contains the standard mode of operations for any calculator, it also uses more advance operations that used libraries such as math and numpy. 
+    It contains the standard mode of operations for any calculator, 
+    it also uses more advance operations that used libraries such as math and numpy. 
 
     List of functionalities:
     1. Addition
@@ -27,5 +28,5 @@ Functionality:
 
 How does it work?
 
-    
+
 
