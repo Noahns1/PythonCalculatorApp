@@ -28,5 +28,11 @@ Functionality:
 
 How does it work?
 
+    For the simple operators such as divide, multiply, add, and subtract. You select your chosen number then your operator, and then your next chosen number and select "=", do find your answer.
+
+    Example: press the following buttons. "2", "+", "2", "=". You will get 4 which then represents your first chosen number.
+
+    
+    
 
 
