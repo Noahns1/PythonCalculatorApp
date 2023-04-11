@@ -181,7 +181,7 @@ class Calculator:
             button = tk.Button(self.buttons_frame, text=symbol, bg=ORANGE, fg=WHITE,
                                font=SYMBOLS_FONT, borderwidth=0,
                                command=lambda opt=operator: self.append_operator(opt),
-                               height=1, width=5)
+                               height=1, width=6)
             button.grid(row=x, column=6, sticky=tk.NSEW)
             x += 1
 
