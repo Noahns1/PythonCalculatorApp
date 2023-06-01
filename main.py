@@ -13,13 +13,6 @@ import imagehash as ih
 import hashlib
 from os import listdir
 
-
-# --- Constants ---
-# notes
-# add specific error funtionality
-# truncate expression
-
-
 # Fonts
 EXP_FONT = ("Comic Sans", 48, "bold")
 TTL_FONT = ("Comic Sans", 16)
@@ -38,22 +31,6 @@ BTN_COLOR = "#6272A4"
 BLACK_COLOR = "#1C1C1C"
 ORANGE = "#FF9500"
 
-# Numbers
-# Seven = hashlib.md5(Image.open('buttons/Seven.png'))
-# Seven.update()
-
-# note: crtl+/ will mass comment
-# One = ih.average_hash(Image.open('buttons/One.png'))
-# Two = ih.average_hash(Image.open('buttons/Two.png'))
-# Three = ih.average_hash(Image.open('buttons/Three.png'))
-# Four = ih.average_hash(Image.open('buttons/Four.png'))
-# Five = ih.average_hash(Image.open('buttons/Five.png'))
-# Six = ih.average_hash(Image.open('buttons/Six.png'))
-# Seven = ih.average_hash(Image.open('buttons/Seven.png'))
-# Eight = ih.average_hash(Image.open('buttons/Eight.png'))
-# Nine = ih.average_hash(Image.open('buttons/Nine.png'))
-# Zero = ih.average_hash(Image.open('buttons/Zero.png'))
-
 class Calculator:
     def __init__(self):
         # Create window
@@ -61,13 +38,6 @@ class Calculator:
         self.window.geometry("600x600")
         self.window.resizable(0, 0) # used to stop the window from being resized
         self.window.title("Calculator")
-
-        # --trying to adjust frame color--
-        # found out that this can't be changed and is only adjusted by
-        # window settings
-        # self.window.configure(bg="#000000")
-        # frame_color = tk.Frame(self.window, bg='#000000')
-        # frame_color.pack()
 
         # Create display
         self.total_expression = ""
@@ -88,18 +58,6 @@ class Calculator:
                            "button/One.png", "buttons/Two.png", "buttons/One.png",
                            "buttons/Zero.png"]
 
-        # Create buttons
-        # self.digits_png = {
-        #     "Seven.png": (2, 2), "buttons/Eight.png": (2, 3), "buttons/Nine.png": (2, 4),
-        #     "buttons/Four.png": (3, 2), "buttons/Five.png": (3, 3), "buttons/Six.png": (3, 4),
-        #     "buttons/One.png": (4, 2), "buttons/Two.png": (4, 3), "buttons/Three.png": (4, 4),
-        #     "buttons/Zero.png": (5, 3), '.': (5, 2)
-        # }
-        # self.png_object = bunchify(self.digits_png)
-        # self.png_object = iter(self.digits_png)
-
-        # This doesn't work, it only expects an iterable or a string
-        # self.Digits = namedtuple("Digits", self.digits.keys())(*self.digits.values())
         # math symbols
         self.operations = {"/": "\u00F7", "*": "\u00D7", "-": "-", "+": "+"}
 
@@ -197,17 +155,6 @@ class Calculator:
                            command=self.percent, height=1, width=5)
         button.grid(row=0, column=5, sticky=tk.NSEW)
 
-    # Grid functionality
-    # def grid(self):
-    #     self.update_label()
-    #
-    # # Grid button
-    # def grid_button(self):
-    #     button = tk.Button(self.buttons_frame, text="Grid", bg=DARK_BLUE, fg=BTN_COLOR,
-    #                        font=SYMBOLS_FONT, borderwidth=0,
-    #                        command=self.grid)
-    #     button.grid(row=0, column=3, columnspan=2, sticky=tk.NSEW)
-
     # +/- functionality
     def negative(self):
         self.current_expression = str(eval(f"{self.current_expression}*-1"))
@@ -215,9 +162,6 @@ class Calculator:
 
     # +/- button
     def negative_button(self):
-        # image = Image.open("buttons/plusMinus2.png")
-        # image = image.resize((100, 100), Image.LANCZOS)
-        # image_png = ImageTk.PhotoImage(image)
         button = tk.Button(self.buttons_frame, text='+/-', bg=LIGHT_GRAY, fg=BLACK_COLOR,
                            font=SYMBOLS_FONT, borderwidth=0,
                            command=self.negative, height=1, width=1)
