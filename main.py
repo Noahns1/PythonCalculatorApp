@@ -1,17 +1,8 @@
 # By: Noah Schlaupitz
 # Calculator App
-import os
-import tkinter as tk
-from decimal import Decimal
 
+import tkinter as tk
 import numpy
-import math
-from bunch import bunchify
-from collections import namedtuple
-from PIL import Image, ImageTk
-import imagehash as ih
-import hashlib
-from os import listdir
 
 # Fonts
 EXP_FONT = ("Comic Sans", 48, "bold")
