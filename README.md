@@ -5,7 +5,7 @@ This Application was developed using Tkinter to build the GUI.
 Functionality:
 
     It contains the standard mode of operations of any calculator, 
-    it also uses more advance operations that used libraries such as math and numpy. 
+    it also uses more advance operations that used the library numpy. 
 
     List of functionalities:
     1. Addition
